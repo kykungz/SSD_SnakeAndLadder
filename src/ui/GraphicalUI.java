@@ -38,16 +38,28 @@ public class GraphicalUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int distance = game.rollDie();
-				System.out.println("Rolled " + distance);
-				Player player = game.getCurrrentPlayer();
-				System.out.printf("%s moved from %s ", player.getName(), player.getSquare().getNumber());
-				game.move(player, distance);
-				System.out.println("to " + player.getSquare().getNumber());
-				// Activate Effect
-				player.getSquare().performEffects(game);
-				game.next();
-				board.repaint();
+				new Thread(() -> {
+					rollButton.setEnabled(false);
+					int distance = game.rollDie();
+					System.out.println("Rolled " + distance);
+					Player player = game.getCurrrentPlayer();
+					System.out.printf("%s moved from %s ", player.getName(), player.getSquare().getNumber());
+					for (int i = 0; i < distance; i++) {
+						try {
+							game.move(player, 1);
+							board.repaint();
+							Thread.sleep(300);
+						} catch (InterruptedException e1) {
+							e1.printStackTrace();
+						}
+					}
+					System.out.println("to " + player.getSquare().getNumber());
+					// Activate Effect
+					player.getSquare().performEffects(game);
+					game.next();
+					board.repaint();
+					rollButton.setEnabled(true);
+				}).start();
 			}
 		});
 		board = new BoardPanel();
@@ -57,14 +69,16 @@ public class GraphicalUI extends JFrame {
 	}
 
 	private class BoardPanel extends JPanel {
-		private Image img;
-		private static final int SIZE = 600;
+		private Image background;
+		private Image knight;
+		private static final int SIZE = 700;
 
 		public BoardPanel() {
 			super();
 			this.setPreferredSize(new Dimension(SIZE, SIZE));
 			try {
-				img = ImageIO.read(GraphicalUI.class.getResourceAsStream("/assets/board.jpg"));
+				background = ImageIO.read(GraphicalUI.class.getResourceAsStream("/assets/board.jpg"));
+				knight = ImageIO.read(GraphicalUI.class.getResourceAsStream("/assets/knight2.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -72,7 +86,7 @@ public class GraphicalUI extends JFrame {
 
 		public void paintComponent(Graphics g) {
 			final int BLOCK_SIZE = SIZE / 10;
-			g.drawImage(img, 0, 0, SIZE, SIZE, null);
+			g.drawImage(background, 0, 0, SIZE, SIZE, null);
 			for (Player player : game.getPlayers()) {
 				int index = player.getSquare().getNumber() - 1;
 				int x;
@@ -81,8 +95,9 @@ public class GraphicalUI extends JFrame {
 				} else {
 					x = SIZE - (BLOCK_SIZE * ((index + 1) % 10));
 				}
-				g.fillOval(x, SIZE - (BLOCK_SIZE * ((index / 10) + 1)), BLOCK_SIZE / 2, BLOCK_SIZE / 2);
-				g.drawString(player.getName(), x, SIZE - (BLOCK_SIZE * ((index / 10) + 1)));
+				g.drawImage(knight, x, SIZE - (BLOCK_SIZE * ((index / 10) + 1)), BLOCK_SIZE - 10, BLOCK_SIZE - 10,
+						null);
+				g.drawString(player.getName(), x + 10, SIZE - (BLOCK_SIZE * ((index / 10) + 1)));
 			}
 		}
 	}

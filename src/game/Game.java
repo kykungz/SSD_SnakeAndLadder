@@ -17,10 +17,10 @@ public class Game {
 	public void reset() {
 		this.die = new Die();
 		this.board = new Board();
-		this.players = new Player[3];
+		this.players = new Player[2];
 		players[0] = new Player("Jacky", board.getSquare(0));
-		players[1] = new Player("Jitti", board.getSquare(19));
-		players[2] = new Player("James", board.getSquare(0));
+//		players[1] = new Player("Jitti", board.getSquare(19));
+		players[1] = new Player("James", board.getSquare(0));
 		this.currentPlayerIndex = 0;
 
 		this.board.addEffect(2, new Ladder(board.getSquare(38-1)));
