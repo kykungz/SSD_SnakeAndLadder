@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+
 import game.Game;
 import game.Player;
 
@@ -36,18 +38,26 @@ public class GraphicalUI extends JFrame {
 		rollButton.setPreferredSize(new Dimension(0, 50));
 		rollButton.addActionListener(new ActionListener() {
 
-			@Override
+			@Override	
 			public void actionPerformed(ActionEvent e) {
 				int distance = game.rollDie();
-				System.out.println("Rolled " + distance);
-				Player player = game.getCurrrentPlayer();
-				System.out.printf("%s moved from %s ", player.getName(), player.getSquare().getNumber());
-				game.move(player, distance);
-				System.out.println("to " + player.getSquare().getNumber());
-				// Activate Effect
-				player.getSquare().performEffects(game);
-				game.next();
-				board.repaint();
+				
+				while(game.isPlaying()){
+					System.out.println("Rolled " + distance);
+					Player player = game.getCurrrentPlayer();
+					System.out.printf("%s moved from %s ", player.getName(), player.getSquare().getNumber());
+					game.move(player, distance);
+					System.out.println("to " + player.getSquare().getNumber());
+					if(game.getCurrrentPlayer().getSquare().getNumber() == 100){
+						System.out.printf("%s Win",player.getName());
+						game.gameEnd();
+					}
+						// Activate Effect
+						player.getSquare().performEffects(game);
+						game.next();
+						board.repaint();
+				}
+				
 			}
 		});
 		board = new BoardPanel();
