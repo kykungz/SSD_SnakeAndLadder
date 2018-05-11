@@ -88,7 +88,7 @@ public class GraphicalUI extends JFrame {
 			super();
 			this.setPreferredSize(new Dimension(SIZE, SIZE));
 			try {
-				background = ImageIO.read(GraphicalUI.class.getResourceAsStream("/assets/board.png"));
+				background = ImageIO.read(GraphicalUI.class.getResourceAsStream("/assets/new_board.png"));
 				knight = ImageIO.read(GraphicalUI.class.getResourceAsStream("/assets/knight2.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
