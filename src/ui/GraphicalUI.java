@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import game.Game;
@@ -39,14 +40,18 @@ public class GraphicalUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new Thread(() -> {
-//					rollButton.setEnabled(false);
+					rollButton.setEnabled(false);
+					int direction = 1;
 					int distance = game.rollDie();
 					System.out.println("Rolled " + distance);
 					Player player = game.getCurrrentPlayer();
 					System.out.printf("%s moved from %s ", player.getName(), player.getSquare().getNumber());
 					for (int i = 0; i < distance; i++) {
 						try {
-							game.move(player, 1);
+							game.move(player, direction);
+							if (player.getSquare().getNumber() >= 99) {
+								direction = -1;
+							}
 							board.repaint();
 							Thread.sleep(100);
 						} catch (InterruptedException e1) {
@@ -54,10 +59,16 @@ public class GraphicalUI extends JFrame {
 						}
 					}
 					System.out.println("to " + player.getSquare().getNumber());
+
 					// Activate Effect
 					player.getSquare().performEffects(game);
-					game.next();
+
 					board.repaint();
+					if (!game.isPlaying()) {
+						JOptionPane.showConfirmDialog(board, "Game Over");
+					} else {
+						game.next();
+					}
 					rollButton.setEnabled(true);
 				}).start();
 			}

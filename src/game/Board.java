@@ -18,10 +18,6 @@ public class Board {
 	}
 
 	public Square getSquare(int number) {
-		return squares[number];
-	}
-	
-	public boolean winningSquare(int number){
-			return squares[number].isWin();
+		return squares[number - 1];
 	}
 }

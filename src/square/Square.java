@@ -9,20 +9,10 @@ import game.Game;
 public class Square {
 	private List<SpecialEffect> effects;
 	private int number;
-	private boolean isWin ;
 
 	public Square(int number) {
 		this.number = number;
 		this.effects = new ArrayList<>();
-		isWin = false;
-	}
-
-	public boolean isWin() {
-		return isWin;
-	}
-
-	public void setWin(boolean isWin) {
-		this.isWin=isWin;
 	}
 
 	public void addEffect(SpecialEffect effect) {
