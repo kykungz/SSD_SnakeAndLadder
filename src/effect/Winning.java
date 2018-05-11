@@ -6,7 +6,7 @@ public class Winning implements SpecialEffect {
 
  @Override
  public void perform(Game game) {
-  game.end();
+  game.gameEnd();
  }
 
 }
