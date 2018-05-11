@@ -39,7 +39,7 @@ public class GraphicalUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new Thread(() -> {
-					rollButton.setEnabled(false);
+//					rollButton.setEnabled(false);
 					int distance = game.rollDie();
 					System.out.println("Rolled " + distance);
 					Player player = game.getCurrrentPlayer();
@@ -48,7 +48,7 @@ public class GraphicalUI extends JFrame {
 						try {
 							game.move(player, 1);
 							board.repaint();
-							Thread.sleep(300);
+							Thread.sleep(100);
 						} catch (InterruptedException e1) {
 							e1.printStackTrace();
 						}
