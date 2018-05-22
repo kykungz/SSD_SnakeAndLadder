@@ -3,14 +3,14 @@
 
 Snake And Ladder Game.
 
+## Download
+[SnakeAndLadder.jar](https://github.com/kykungz/SSD_SnakeAndLadder/raw/master/SnakeAndLadder.jar)
+
 ## Domain Model
 ![dmm](./SnakeAndLadderDomainModel.png)
 
 ## UML
 ![uml](./SnakeAndLadderUML.png)
-
-## Download
-[SnakeAndLadder.jar](https://github.com/kykungz/SSD_SnakeAndLadder/raw/master/SnakeAndLadder.jar)
 
 ### Members
 - Kongpon Charanwattanakit 5910546376
