@@ -24,9 +24,10 @@ public class Game {
 		this.board = new Board();
 		this.players = new ArrayList<Player>();
 		this.playing = true;
-		players.add(new Player("Jacky", board.getSquare(97)));
-		players.add(new Player("Jitti", board.getSquare(97)));
-		players.add(new Player("James", board.getSquare(97)));
+		for (int i = 0; i < player; i++) {
+			players.add(new Player("Player " + (i + 1), board.getSquare(1)));
+		}
+
 		this.currentPlayerIndex = 0;
 
 		this.board.addEffect(2, new Ladder(board.getSquare(38)));
@@ -41,21 +42,21 @@ public class Game {
 		this.board.addEffect(78, new Ladder(board.getSquare(98)));
 		this.board.addEffect(87, new Ladder(board.getSquare(94)));
 
-//		this.board.addEffect(16, new Snake(board.getSquare(6)));
-//		this.board.addEffect(46, new Snake(board.getSquare(25)));
-//		this.board.addEffect(49, new Snake(board.getSquare(11)));
-//		this.board.addEffect(62, new Snake(board.getSquare(19)));
-//		this.board.addEffect(64, new Snake(board.getSquare(60)));
-//		this.board.addEffect(74, new Snake(board.getSquare(53)));
-//		this.board.addEffect(89, new Snake(board.getSquare(68)));
-//		this.board.addEffect(92, new Snake(board.getSquare(88)));
-//		this.board.addEffect(95, new Snake(board.getSquare(75)));
-//		this.board.addEffect(99, new Snake(board.getSquare(80)));
-//
-//		this.board.addEffect(70, new Freeze());
-//		this.board.addEffect(56, new Freeze());
-//		this.board.addEffect(6, new Freeze());
-//
+		this.board.addEffect(16, new Snake(board.getSquare(6)));
+		this.board.addEffect(46, new Snake(board.getSquare(25)));
+		this.board.addEffect(49, new Snake(board.getSquare(11)));
+		this.board.addEffect(62, new Snake(board.getSquare(19)));
+		this.board.addEffect(64, new Snake(board.getSquare(60)));
+		this.board.addEffect(74, new Snake(board.getSquare(53)));
+		this.board.addEffect(89, new Snake(board.getSquare(68)));
+		this.board.addEffect(92, new Snake(board.getSquare(88)));
+		this.board.addEffect(95, new Snake(board.getSquare(75)));
+		this.board.addEffect(99, new Snake(board.getSquare(80)));
+
+		this.board.addEffect(70, new Freeze());
+		this.board.addEffect(56, new Freeze());
+		this.board.addEffect(6, new Freeze());
+
 		this.board.addEffect(44, new Reverse());
 		this.board.addEffect(84, new Reverse());
 
@@ -65,6 +66,7 @@ public class Game {
 	public void reset() {
 		this.playing = true;
 		for (Player p : players) {
+			p.setMovable(true);
 			p.setSquare(board.getSquare(1));
 		}
 	}
@@ -92,13 +94,13 @@ public class Game {
 	public void next() {
 		currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
 	}
-	
+
 	public List<Move> getReplay() {
 		return moves;
 	}
 
 	public void move(Player player, int distance) {
-		Move m = new Move(player, distance) {
+		Move m = new Move() {
 			@Override
 			public void execute(Game game) {
 				int number = player.getSquare().getNumber();
@@ -112,6 +114,15 @@ public class Game {
 	}
 
 	public void move(Player player, Square square) {
-		player.setSquare(square);
+		Move m = new Move() {
+			@Override
+			public void execute(Game game) {
+				if (player.isMovable()) {
+					player.setSquare(square);
+				}
+			}
+		};
+		m.execute(this);
+		moves.add(m);
 	}
 }

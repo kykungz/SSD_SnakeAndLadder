@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -50,7 +51,7 @@ public class GraphicalUI extends JFrame {
 					for (int i = 0; i < distance; i++) {
 						try {
 							game.move(player, direction);
-							if (player.getSquare().getNumber() >= 99) {
+							if (player.getSquare().getNumber() >= 100) {
 								direction = -1;
 							}
 							board.repaint();
@@ -75,6 +76,11 @@ public class GraphicalUI extends JFrame {
 							System.out.println("Watch Replay");
 							for (Move m : game.getReplay()) {
 								m.execute(game);
+								try {
+									Thread.sleep(100);
+								} catch (InterruptedException e1) {
+									e1.printStackTrace();
+								}
 								board.repaint();
 							}
 						}
@@ -130,9 +136,43 @@ public class GraphicalUI extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		Game game = new Game(4);
-		GraphicalUI ui = new GraphicalUI(game);
-		ui.setVisible(true);
+		
+		JFrame frame = new JFrame("Snake and Ladder");
+		JButton one = new JButton("1 Player");
+		JButton two = new JButton("2 Players");
+		JButton three = new JButton("3 Players");
+		JButton four = new JButton("4 Players");
+		
+		one.addActionListener(e -> {
+			Game game = new Game(1);
+			GraphicalUI ui = new GraphicalUI(game);
+			ui.setVisible(true);
+		});
+		two.addActionListener(e -> {
+			Game game = new Game(2);
+			GraphicalUI ui = new GraphicalUI(game);
+			ui.setVisible(true);
+		});
+		three.addActionListener(e -> {
+			Game game = new Game(3);
+			GraphicalUI ui = new GraphicalUI(game);
+			ui.setVisible(true);
+		});
+		four.addActionListener(e -> {
+			Game game = new Game(4);
+			GraphicalUI ui = new GraphicalUI(game);
+			ui.setVisible(true);
+		});
+		
+		frame.setLayout(new FlowLayout());
+		frame.add(one);
+		frame.add(two);
+		frame.add(three);
+		frame.add(four);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setVisible(true);
+		
 	}
 
 }

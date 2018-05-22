@@ -14,7 +14,7 @@ public abstract class Portal implements SpecialEffect {
 	@Override
 	public void perform(Game game) {
 		Player currentPlayer = game.getCurrrentPlayer();
-			game.move(currentPlayer, target);
+		game.move(currentPlayer, target);
 	}
 
 }
