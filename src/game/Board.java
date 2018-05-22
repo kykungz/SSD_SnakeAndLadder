@@ -1,7 +1,6 @@
 package game;
 
 import effect.SpecialEffect;
-import square.Square;
 
 public class Board {
 	private Square[] squares;

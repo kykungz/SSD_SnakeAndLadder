@@ -147,21 +147,25 @@ public class GraphicalUI extends JFrame {
 			Game game = new Game(1);
 			GraphicalUI ui = new GraphicalUI(game);
 			ui.setVisible(true);
+			frame.dispose();
 		});
 		two.addActionListener(e -> {
 			Game game = new Game(2);
 			GraphicalUI ui = new GraphicalUI(game);
 			ui.setVisible(true);
+			frame.dispose();
 		});
 		three.addActionListener(e -> {
 			Game game = new Game(3);
 			GraphicalUI ui = new GraphicalUI(game);
 			ui.setVisible(true);
+			frame.dispose();
 		});
 		four.addActionListener(e -> {
 			Game game = new Game(4);
 			GraphicalUI ui = new GraphicalUI(game);
 			ui.setVisible(true);
+			frame.dispose();
 		});
 		
 		frame.setLayout(new FlowLayout());
@@ -172,7 +176,6 @@ public class GraphicalUI extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
-		
 	}
 
 }

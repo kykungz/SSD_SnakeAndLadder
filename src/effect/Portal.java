@@ -2,7 +2,7 @@ package effect;
 
 import game.Game;
 import game.Player;
-import square.Square;
+import game.Square;
 
 public abstract class Portal implements SpecialEffect {
 	private Square target;

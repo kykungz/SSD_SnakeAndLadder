@@ -1,7 +1,5 @@
 package game;
 
-import square.Square;
-
 public class Player {
 	private String name;
 	private Square square;

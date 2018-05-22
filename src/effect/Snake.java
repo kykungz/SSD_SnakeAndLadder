@@ -1,6 +1,6 @@
 package effect;
 
-import square.Square;
+import game.Square;
 
 public class Snake extends Portal {
 

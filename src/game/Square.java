@@ -1,10 +1,9 @@
-package square;
+package game;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import effect.SpecialEffect;
-import game.Game;
 
 public class Square {
 	private List<SpecialEffect> effects;

@@ -8,7 +8,6 @@ import effect.Ladder;
 import effect.Reverse;
 import effect.Snake;
 import effect.Winning;
-import square.Square;
 
 public class Game {
 	private Board board;
