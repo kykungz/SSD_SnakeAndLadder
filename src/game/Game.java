@@ -3,7 +3,11 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 
+import effect.Freeze;
 import effect.Ladder;
+import effect.Reverse;
+import effect.Snake;
+import effect.Winning;
 import square.Square;
 
 public class Game {
@@ -12,16 +16,14 @@ public class Game {
 	private Die die;
 	private int currentPlayerIndex;
 	private boolean playing;
+	private List<Move> moves;
 
-	public Game() {
-		this.reset();
-	}
-
-	public void reset() {
-		this.playing = true;
+	public Game(int player) {
+		this.moves = new ArrayList<>();
 		this.die = new Die();
 		this.board = new Board();
 		this.players = new ArrayList<Player>();
+		this.playing = true;
 		players.add(new Player("Jacky", board.getSquare(97)));
 		players.add(new Player("Jitti", board.getSquare(97)));
 		players.add(new Player("James", board.getSquare(97)));
@@ -49,6 +51,22 @@ public class Game {
 //		this.board.addEffect(92, new Snake(board.getSquare(88)));
 //		this.board.addEffect(95, new Snake(board.getSquare(75)));
 //		this.board.addEffect(99, new Snake(board.getSquare(80)));
+//
+//		this.board.addEffect(70, new Freeze());
+//		this.board.addEffect(56, new Freeze());
+//		this.board.addEffect(6, new Freeze());
+//
+//		this.board.addEffect(44, new Reverse());
+//		this.board.addEffect(84, new Reverse());
+
+		this.board.addEffect(100, new Winning());
+	}
+
+	public void reset() {
+		this.playing = true;
+		for (Player p : players) {
+			p.setSquare(board.getSquare(1));
+		}
 	}
 
 	public boolean isPlaying() {
@@ -74,12 +92,23 @@ public class Game {
 	public void next() {
 		currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
 	}
+	
+	public List<Move> getReplay() {
+		return moves;
+	}
 
 	public void move(Player player, int distance) {
-		int number = player.getSquare().getNumber();
-		if (player.isMovable()) {
-			player.setSquare(board.getSquare(number + distance));			
-		}
+		Move m = new Move(player, distance) {
+			@Override
+			public void execute(Game game) {
+				int number = player.getSquare().getNumber();
+				if (player.isMovable()) {
+					player.setSquare(board.getSquare(number + distance));
+				}
+			}
+		};
+		m.execute(this);
+		moves.add(m);
 	}
 
 	public void move(Player player, Square square) {

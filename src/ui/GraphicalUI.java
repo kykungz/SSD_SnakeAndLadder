@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import game.Game;
+import game.Move;
 import game.Player;
 
 public class GraphicalUI extends JFrame {
@@ -33,7 +34,7 @@ public class GraphicalUI extends JFrame {
 	}
 
 	private void initComponents() {
-		JButton rollButton = new JButton("Roll");
+		JButton rollButton = new JButton(game.getCurrrentPlayer().getName() + "'s Turn. [ROLL]");
 		rollButton.setPreferredSize(new Dimension(0, 50));
 		rollButton.addActionListener(new ActionListener() {
 
@@ -65,11 +66,24 @@ public class GraphicalUI extends JFrame {
 
 					board.repaint();
 					if (!game.isPlaying()) {
-						JOptionPane.showConfirmDialog(board, "Game Over");
+						Object[] options = { "Watch Replay", "Play Again" };
+						int answer = JOptionPane.showOptionDialog(getContentPane(),
+								"Game Over. Winner is " + player.getName(), "Game Over", JOptionPane.DEFAULT_OPTION,
+								JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+						game.reset();
+						if (answer == JOptionPane.YES_OPTION) {
+							System.out.println("Watch Replay");
+							for (Move m : game.getReplay()) {
+								m.execute(game);
+								board.repaint();
+							}
+						}
 					} else {
 						game.next();
 					}
 					rollButton.setEnabled(true);
+					rollButton.setText(game.getCurrrentPlayer().getName() + "'s Turn. [ROLL]");
+					board.repaint();
 				}).start();
 			}
 		});
@@ -88,7 +102,7 @@ public class GraphicalUI extends JFrame {
 			super();
 			this.setPreferredSize(new Dimension(SIZE, SIZE));
 			try {
-				background = ImageIO.read(GraphicalUI.class.getResourceAsStream("/assets/new_board.png"));
+				background = ImageIO.read(GraphicalUI.class.getResourceAsStream("/assets/board.png"));
 				knight = ImageIO.read(GraphicalUI.class.getResourceAsStream("/assets/knight2.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -114,7 +128,7 @@ public class GraphicalUI extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		Game game = new Game();
+		Game game = new Game(4);
 		GraphicalUI ui = new GraphicalUI(game);
 		ui.setVisible(true);
 	}

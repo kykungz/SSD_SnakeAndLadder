@@ -30,7 +30,7 @@ public class ConsoleUI {
 	}
 
 	public static void main(String[] args) {
-		Game game = new Game();
+		Game game = new Game(4);
 		ConsoleUI console = new ConsoleUI(game);
 		console.play();
 	}

@@ -5,10 +5,10 @@ import game.Player;
 
 public class Freeze implements SpecialEffect {
 
- @Override
- public void perform(Game game) {
-  Player player = game.getCurrrentPlayer();
-  player.setMovable(!player.isMovable());
- }
+	@Override
+	public void perform(Game game) {
+		Player player = game.getCurrrentPlayer();
+		player.setMovable(!player.isMovable());
+	}
 
 }

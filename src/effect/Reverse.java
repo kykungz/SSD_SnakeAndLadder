@@ -2,11 +2,11 @@ package effect;
 
 import game.Game;
 
-public class Winning implements SpecialEffect {
+public class Reverse implements SpecialEffect {
 
 	@Override
 	public void perform(Game game) {
-		game.end();
+		int distance = game.rollDie();
 	}
 
 }
