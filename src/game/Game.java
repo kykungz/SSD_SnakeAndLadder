@@ -56,8 +56,8 @@ public class Game {
 //		this.board.addEffect(56, new Freeze());
 //		this.board.addEffect(6, new Freeze());
 //
-//		this.board.addEffect(44, new Reverse());
-//		this.board.addEffect(84, new Reverse());
+		this.board.addEffect(44, new Reverse());
+		this.board.addEffect(84, new Reverse());
 
 		this.board.addEffect(100, new Winning());
 	}
