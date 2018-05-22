@@ -117,9 +117,7 @@ public class GraphicalUI extends JFrame {
 				int x;
 				if ((index / 10) % 2 == 0) {
 					x = BLOCK_SIZE * (index % 10);
-				}  else if (index == 19 || index == 39 || index == 59 || index == 79 || index == 99) {
-					x = 0;
-				}else {
+				} else {
 					x = SIZE - (BLOCK_SIZE * ((index + 1) % 10));
 				}
 				g.drawImage(knight, x, SIZE - (BLOCK_SIZE * ((index / 10) + 1)), BLOCK_SIZE - 10, BLOCK_SIZE - 10,
